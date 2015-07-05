@@ -1,0 +1,26 @@
+{
+    "name": "angularModal",
+    "keywords": [
+        "angular.js",
+        "modals",
+        "popups",
+        "dialog"
+    ],
+    "authors": [
+        "yedaodao"
+    ],
+    "license": "MIT",
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "test",
+        "tests",
+        "example",
+        "css/myth",
+        "Gruntfile.js"
+    ],
+    "dependencies": {
+        "angular": "^1.3.x"
+    }
+}
