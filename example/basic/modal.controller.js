@@ -31,8 +31,5 @@
             $scope.$on('modal.destroy.event', function () {
                 console.log('modal destroy');
             });
-            $scope.$on('modal.tmplLoadError.event', function () {
-                console.log('template error');
-            })
     }]);
 }));

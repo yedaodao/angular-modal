@@ -329,9 +329,9 @@
                 }
 
                 function destroyAction(obj) {
+                    obj.value.element.unbind();
                     obj.value.element.remove();
                     obj.value.modalScope.$destroy();
-                    obj.value.element.unbind();
                     stack.remove(obj.key);
                 }
 
