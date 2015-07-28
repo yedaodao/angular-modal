@@ -4,11 +4,15 @@
     <meta charset="UTF-8">
     <title>basic angular modal</title>
     <link rel="stylesheet" href="../../css/angular-modal.css"/>
+    <script src="../../bower_components/angular/angular.js"></script>
+    <script src="../../js/angular-modal.js"></script>
+    <script src="modal.controller.js"></script>
+    <script src="test.controller.js"></script>
+    <script src="basic.js"></script>
 </head>
-<body>
-<div angular-modal tmpl-url="angular-modal-basic.html"></div>
-<script src="../../bower_components/angular/angular.js"></script>
-<script src="../../js/angular-modal.js"></script>
-<script src="basic.js"></script>
+<body ng-controller="testController">
+
+<input type="button" value="点击显示" ng-click="show()">
+
 </body>
 </html>

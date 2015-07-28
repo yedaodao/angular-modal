@@ -1,15 +1,14 @@
-<div class="angular-modal open">
-    <div class="angular-modal-dialog">
-        <div class="angular-modal-content">
-            <div class="angular-modal-header">
-                <h4 class="angular-modal-title">angular-modal title</h4>
-            </div>
-            <div class="angular-modal-body">
-                <p>One fine body&hellip;</p>
-            </div>
-            <div class="angular-modal-footer">
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
+<div class="angular-modal-dialog">
+    <div class="angular-modal-content">
+        <div class="angular-modal-header">
+            <h4 class="angular-modal-title">{{title}}</h4>
+        </div>
+        <div class="angular-modal-body">
+            {{test}}
+        </div>
+        <div class="angular-modal-footer">
+            <button type="button" class="btn" ng-click="click()">Save changes</button>
+            <button type="button" class="btn" ng-click="hide()">close</button>
         </div>
     </div>
 </div>
