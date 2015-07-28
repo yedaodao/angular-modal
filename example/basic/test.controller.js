@@ -11,6 +11,7 @@
     angular.module('testModal').controller('testController', ['$scope', 'angularModal', function ($scope, angularModal) {
         $scope.show = function () {
             angularModal.init().then(function (data) {
+                console.log(data);
                 angularModal.open(data.key);
             });
         }
