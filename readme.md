@@ -82,19 +82,18 @@ modalController：
         });
 	}]);
 	
-- bindElement: 模板插入到哪个元素。
-- position: 位置（center,top,custom）。
-- left: 位置为custom时可用。自定义模态框位置。
-- top: 同上。
-- width：modal宽度。
-- scope：可以吧当前模块的数据注入到modal controller的$scope里边。
-- theme：modal动画主题。
-- template：直接加载模板。
-- templateUrl： 模板url。
-- controller：modal对应的angular controller。
-- overlay：点击其他区域是否隐藏/销毁modal。
-- closeAndDestroy：隐藏modal的同时是否同时销毁modal。
-- removable：modal是否是可拖动的。
+- bindElement(可选): 模板插入到哪个元素。
+- position(可选): 位置（center,top,custom）。
+- left(可选): 位置为custom时可用。自定义模态框位置。
+- top(可选): 同上。
+- width(必须)：modal宽度。
+- scope(可选)：可以吧当前模块的数据注入到modal controller的$scope里边；如果controller为空，则使用scope所在的controller。
+- theme(可选)：modal动画主题。
+- templateUrl/template(必须)： 模板url。
+- controller(可选)：modal对应的angular controller，**如果此项为空则必须把某个controller的$scope赋值给scope。**
+- overlay(可选)：点击其他区域是否隐藏/销毁modal。
+- closeAndDestroy(可选)：隐藏modal的同时是否同时销毁modal，默认为true。
+- removable(可选)：modal是否是可拖动的，默认为false。
 
 ## 接口 ##
 
@@ -109,7 +108,7 @@ opts请参照用法。
     data{
 		 closeAndDestroy: true, 
 		 modalScope: $scope, 
-		 controller: Object, 
+		 controller: Object, //controller项未填不返回此项
 		 key: "8cfca573-0b48-4515-816c-c5e553ea95b6", 
 		 element: JQLiteElement
 	}
