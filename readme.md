@@ -28,8 +28,13 @@ init-open-close-destroy
 
 ## 用法 ##
     angularModal.init({
+		position: 'center'，
+		left: 0,
+		top: 0,
 		width: 600,
+		scope: {},
         theme: 'default-theme',
+		template: '',
         templateUrl: 'angular-modal-basic.html',
         controller: 'modalController',
         overlay: true,
@@ -76,10 +81,14 @@ modalController：
         });
 	}]);
 	
-
+- position: 位置（center,top,custom）
+- left: 位置为custom时可用。自定义模态框位置。
+- top: 同上。
 - width：modal宽度。
+- scope：可以吧当前模块的数据注入到modal controller的$scope里边。
 - theme：modal动画主题。
-- templateUrl 模板url。
+- template：直接加载模板。
+- templateUrl： 模板url。
 - controller：modal对应的angular controller。
 - overlay：点击其他区域是否隐藏/销毁modal。
 - closeAndDestroy：隐藏modal的同时是否同时销毁modal。

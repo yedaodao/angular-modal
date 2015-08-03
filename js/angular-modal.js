@@ -206,6 +206,8 @@
                     var initDefered = $q.defer();
                     var options = {
                         position: 'center',
+                        left: 0,
+                        top: 0,
                         scope: {},
                         width: 600,
                         theme: 'default-theme',
@@ -233,18 +235,25 @@
                 }
 
                 function initAction(result, options) {
-                    var top = 30;
-                    if(options.position == 'center'){
-                        //top = body[0].clientHeight / 2 - options.width / 2;
-                    }
-                    var left = body[0].clientWidth / 2 - options.width / 2;
                     var uid = uuid(),
                         instanceObj = createCtrlInstance(options.controller),
-                        modalEl = $('<div style="top:' + ((stack.openedLength() + 1) * top) + 'px;left:' + left + 'px" id="' + uid + '" class="angular-modal ' + options.theme + '" ng-class="{open:display}">' + result + '</div>'),
+                        modalEl = $('<div id="' + uid + '" class="angular-modal ' + options.theme + '" ng-class="{open:display}">' + result + '</div>'),
                         modalDomEl = $compile(modalEl)(instanceObj.modalScope);
-
-                    modalDomEl[0].style.width = options.width + 'px';
                     body.append(modalDomEl);
+
+                    var left = body[0].clientWidth / 2 - options.width / 2;
+                    if(options.position == 'center') {
+                        var top = bgDomEl[0].clientHeight / 2 - modalDomEl[0].clientHeight / 2;
+                    }else if(options.position == 'top') {
+                        var top = 30;
+                    }else if(options.position == 'custom') {
+                        left = options.left;
+                        top = options.top;
+                    }
+                    modalDomEl[0].style.width = options.width + 'px';
+                    modalDomEl[0].style.top = top + 'px';
+                    modalDomEl[0].style.left = left + 'px';
+
 
                     if (options.removable) {
                         modalDomEl.addClass('can-remove');
