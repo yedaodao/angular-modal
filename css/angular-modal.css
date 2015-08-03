@@ -5,6 +5,7 @@
 }
 
 .angular-modal {
+    box-shadow: 5px 5px 20px 0px #bec2ce;
     font-family: Helvetica, "Microsoft YaHei", "微软雅黑", SimSun, "宋体", STXihei, "华文细黑", sans-serif;
     visibility: hidden;
     overflow: hidden;
@@ -97,14 +98,13 @@
 
 .angular-modal .btn:active {
     background-color: #e3e3e3;
-    /*box-shadow: 10px 10px 50px 20px #e3e3e3 inset;*/
 }
 
 /* 默认动画主题 */
 .default-theme.open {
     opacity: 1;
 }
-.default-theme .angular-modal-content {
+.default-theme {
     -webkit-transform: scale(0.7);
     -moz-transform: scale(0.7);
     -ms-transform: scale(0.7);
@@ -115,7 +115,7 @@
     transition: all 0.3s;
 }
 
-.open.default-theme .angular-modal-content {
+.open.default-theme {
     -webkit-transform: scale(1);
     -moz-transform: scale(1);
     -ms-transform: scale(1);
@@ -125,7 +125,7 @@
 /* 默认主题结束 */
 
 /* 右侧滑入 */
-.right-slide-theme .angular-modal-content {
+.right-slide-theme {
     -webkit-transform: translateX(20%);
     -moz-transform: translateX(20%);
     -ms-transform: translateX(20%);
@@ -136,7 +136,7 @@
     transition: all 0.3s cubic-bezier(0.25, 0.5, 0.5, 0.9);
 }
 
-.open.right-slide-theme .angular-modal-content {
+.open.right-slide-theme {
     -webkit-transform: translateX(0);
     -moz-transform: translateX(0);
     -ms-transform: translateX(0);
@@ -151,7 +151,7 @@
     perspective: 1300px;
 }
 
-.sign-3d-theme .angular-modal-content {
+.sign-3d-theme {
     -webkit-transform-style: preserve-3d;
     -moz-transform-style: preserve-3d;
     transform-style: preserve-3d;
@@ -168,7 +168,7 @@
     transition: all 0.3s;
 }
 
-.open.sign-3d-theme .angular-modal-content {
+.open.sign-3d-theme {
     -webkit-transform: rotateX(0deg);
     -moz-transform: rotateX(0deg);
     -ms-transform: rotateX(0deg);

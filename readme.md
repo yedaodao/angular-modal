@@ -28,7 +28,8 @@ init-open-close-destroy
 
 ## 用法 ##
     angularModal.init({
-		position: 'center'，
+		bindElement: $document.find('body'),
+		position: 'center',
 		left: 0,
 		top: 0,
 		width: 600,
@@ -81,7 +82,8 @@ modalController：
         });
 	}]);
 	
-- position: 位置（center,top,custom）
+- bindElement: 模板插入到哪个元素。
+- position: 位置（center,top,custom）。
 - left: 位置为custom时可用。自定义模态框位置。
 - top: 同上。
 - width：modal宽度。
