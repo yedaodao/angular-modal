@@ -205,6 +205,7 @@
                 function init(opts) {
                     var initDefered = $q.defer();
                     var options = {
+                        bindElement: body,
                         position: 'center',
                         left: 0,
                         top: 0,
@@ -239,9 +240,9 @@
                         instanceObj = createCtrlInstance(options.controller),
                         modalEl = $('<div id="' + uid + '" class="angular-modal ' + options.theme + '" ng-class="{open:display}">' + result + '</div>'),
                         modalDomEl = $compile(modalEl)(instanceObj.modalScope);
-                    body.append(modalDomEl);
+                    options.bindElement.append(modalDomEl);
 
-                    var left = body[0].clientWidth / 2 - options.width / 2;
+                    var left = options.bindElement[0].clientWidth / 2 - options.width / 2;
                     if(options.position == 'center') {
                         var top = bgDomEl[0].clientHeight / 2 - modalDomEl[0].clientHeight / 2;
                     }else if(options.position == 'top') {
