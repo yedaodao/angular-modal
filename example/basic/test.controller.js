@@ -9,8 +9,26 @@
     }
 }(this, function (angular) {
     angular.module('testModal').controller('testController', ['$scope', 'angularModal', function ($scope, angularModal) {
-        $scope.show = function () {
-            angularModal.init().then(function (data) {
+        $scope.showTop = function () {
+            angularModal.init({
+                position: 'top'
+            }).then(function (data) {
+                angularModal.open(data.key);
+            });
+        }
+        $scope.showCenter = function () {
+            angularModal.init({
+                position: 'center'
+            }).then(function (data) {
+                angularModal.open(data.key);
+            });
+        }
+        $scope.showCustom = function () {
+            angularModal.init({
+                position: 'custom',
+                left: 100,
+                top: 100
+            }).then(function (data) {
                 console.log(data);
                 angularModal.open(data.key);
             });
