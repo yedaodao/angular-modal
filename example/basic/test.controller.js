@@ -21,6 +21,7 @@
         }
         $scope.showCenter = function () {
             angularModal.init({
+                scope: $scope,
                 position: 'center'
             }).then(function (data) {
                 angularModal.open(data.key);
@@ -28,11 +29,11 @@
         }
         $scope.showCustom = function () {
             angularModal.init({
+                controller: 'modalController',
                 position: 'custom',
                 left: 100,
                 top: 100
             }).then(function (data) {
-                console.log(data);
                 angularModal.open(data.key);
             });
         }
