@@ -9,8 +9,11 @@
     }
 }(this, function (angular) {
     angular.module('testModal').controller('testController', ['$scope', 'angularModal', function ($scope, angularModal) {
+        $scope.title= "标题";
+        $scope.test = "hello modal";
         $scope.showTop = function () {
             angularModal.init({
+                controller: 'modalController',
                 position: 'top'
             }).then(function (data) {
                 angularModal.open(data.key);

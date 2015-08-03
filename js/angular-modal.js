@@ -214,7 +214,7 @@
                         theme: 'default-theme',
                         template: '',
                         templateUrl: 'angular-modal-basic.html',
-                        controller: 'modalController',
+                        controller: '',
                         overlay: true,
                         closeAndDestroy: true,
                         removable: false
@@ -237,9 +237,14 @@
 
                 function initAction(result, options) {
                     var uid = uuid(),
-                        instanceObj = createCtrlInstance(options.controller),
-                        modalEl = $('<div id="' + uid + '" class="angular-modal ' + options.theme + '" ng-class="{open:display}">' + result + '</div>'),
-                        modalDomEl = $compile(modalEl)(instanceObj.modalScope);
+                        modalEl = $('<div id="' + uid + '" class="angular-modal ' + options.theme + '" ng-class="{open:display}">' + result + '</div>');
+                    if(options.controller){
+                        var instanceObj = createCtrlInstance(options.controller),
+                            modalDomEl = $compile(modalEl)(instanceObj.modalScope);
+                    }else{
+                        var modalDomEl = $compile(modalEl)(options.scope);
+                    }
+
                     options.bindElement.append(modalDomEl);
 
                     var left = options.bindElement[0].clientWidth / 2 - options.width / 2;
@@ -262,11 +267,16 @@
                     }
                     var obj = {
                         closeAndDestroy: options.closeAndDestroy,
-                        modalScope: instanceObj.modalScope,
-                        controller: instanceObj.instance,
                         key: uid,
                         element: modalDomEl
                     };
+
+                    if(instanceObj) {
+                        obj.modalScope = instanceObj.modalScope;
+                        obj.controller = instanceObj.instance;
+                    }else {
+                        obj.modalScope = options.scope;
+                    }
                     stack.add(uid, obj);
                     obj.modalScope.close = close;
                     obj.modalScope.open = open;
