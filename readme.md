@@ -39,6 +39,7 @@ init-open-close-destroy
         templateUrl: 'angular-modal-basic.html',
         controller: 'modalController',
         overlay: true,
+		clickBgClose: true,
         closeAndDestroy: true,
         removable: true
 	}).then(function (data) {
@@ -91,7 +92,8 @@ modalController：
 - theme(可选)：modal动画主题。
 - templateUrl/template(必须)： 模板url。
 - controller(可选)：modal对应的angular controller，**如果此项为空则必须把某个controller的$scope赋值给scope。**
-- overlay(可选)：点击其他区域是否隐藏/销毁modal。
+- overlay(可选)：是否显示灰色背景。
+- clickBgClose(可选)：点击其他区域是否关闭模态框。
 - closeAndDestroy(可选)：隐藏modal的同时是否同时销毁modal，默认为true。
 - removable(可选)：modal是否是可拖动的，默认为false。
 

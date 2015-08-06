@@ -123,7 +123,9 @@
                 var bgEl = $('<div class="angular-modal-bg"></div>'),
                     bgDomEl = $compile(bgEl)($rootScope);
                 body.append(bgDomEl);
-                bgDomEl.bind('click', function () {
+
+                function clickHandler() {
+                    $document.unbind('click', clickHandler);
                     var keys = stack.keys(),
                         i = 0;
                     for (i; i < keys.length; i++) {
@@ -147,8 +149,13 @@
                             continue;
                         }
                     }
-                });
-
+                }
+                /**
+                 * 绑定dom点击事件
+                 */
+                function bindDomClick() {
+                    $document.bind('click', clickHandler);
+                }
                 /**
                  * 初始化模态框层级为2000
                  */
@@ -217,7 +224,8 @@
                         controller: '',
                         overlay: true,
                         closeAndDestroy: true,
-                        removable: false
+                        clickBgClose: true,
+                        removable: false,
                     };
                     angular.extend(options, opts);
                     //加载模板
@@ -266,6 +274,8 @@
                         bindMouseEvent(modalDomEl);
                     }
                     var obj = {
+                        clickBgClose: options.clickBgClose,
+                        overlay: options.overlay,
                         closeAndDestroy: options.closeAndDestroy,
                         key: uid,
                         element: modalDomEl
@@ -290,9 +300,15 @@
                  */
                 function open(key) {
                     setTimeout(function () {
-                        bgDomEl.addClass('open');
+
                         var obj = stack.get(key),
                             scope = obj.value.modalScope;
+                        if(obj.value.overlay) {
+                            bgDomEl.addClass('open');
+                        }
+                        if(obj.value.clickBgClose) {
+                            bindDomClick();
+                        }
                         scope.$broadcast('modal.open.start.event');
                         scope.display = true;
                         scope.$apply();
@@ -339,6 +355,7 @@
                 function closeAction(obj) {
                     obj.value.modalScope.$broadcast('modal.close.start.event');
                     obj.value.modalScope.display = false;
+                    $document.unbind('click', clickHandler);
                     if (stack.openedLength() <= 0) {
                         bgDomEl.removeClass('open');
                     }
