@@ -9,9 +9,31 @@
     }
 }(this, function (angular) {
     angular.module('testModal').controller('testController', ['$scope', 'angularModal', function ($scope, angularModal) {
-        $scope.show = function () {
-            angularModal.init().then(function (data) {
-                console.log(data);
+        $scope.title= "标题";
+        $scope.test = "hello modal";
+        $scope.showTop = function () {
+            angularModal.init({
+                controller: 'modalController',
+                position: 'top'
+            }).then(function (data) {
+                angularModal.open(data.key);
+            });
+        }
+        $scope.showCenter = function () {
+            angularModal.init({
+                scope: $scope,
+                position: 'center'
+            }).then(function (data) {
+                angularModal.open(data.key);
+            });
+        }
+        $scope.showCustom = function () {
+            angularModal.init({
+                controller: 'modalController',
+                position: 'custom',
+                left: 100,
+                top: 100
+            }).then(function (data) {
                 angularModal.open(data.key);
             });
         }

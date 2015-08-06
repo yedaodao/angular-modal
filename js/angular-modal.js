@@ -205,13 +205,16 @@
                 function init(opts) {
                     var initDefered = $q.defer();
                     var options = {
+                        bindElement: body,
                         position: 'center',
+                        left: 0,
+                        top: 0,
                         scope: {},
                         width: 600,
                         theme: 'default-theme',
                         template: '',
                         templateUrl: 'angular-modal-basic.html',
-                        controller: 'modalController',
+                        controller: '',
                         overlay: true,
                         closeAndDestroy: true,
                         removable: false
@@ -233,18 +236,30 @@
                 }
 
                 function initAction(result, options) {
-                    var top = 30;
-                    if(options.position == 'center'){
-                        //top = body[0].clientHeight / 2 - options.width / 2;
-                    }
-                    var left = body[0].clientWidth / 2 - options.width / 2;
                     var uid = uuid(),
-                        instanceObj = createCtrlInstance(options.controller),
-                        modalEl = $('<div style="top:' + ((stack.openedLength() + 1) * top) + 'px;left:' + left + 'px" id="' + uid + '" class="angular-modal ' + options.theme + '" ng-class="{open:display}">' + result + '</div>'),
-                        modalDomEl = $compile(modalEl)(instanceObj.modalScope);
+                        modalEl = $('<div id="' + uid + '" class="angular-modal ' + options.theme + '" ng-class="{open:display}">' + result + '</div>');
+                    if(options.controller){
+                        var instanceObj = createCtrlInstance(options.controller),
+                            modalDomEl = $compile(modalEl)(instanceObj.modalScope);
+                    }else{
+                        var modalDomEl = $compile(modalEl)(options.scope);
+                    }
 
+                    options.bindElement.append(modalDomEl);
+
+                    var left = options.bindElement[0].clientWidth / 2 - options.width / 2;
+                    if(options.position == 'center') {
+                        var top = bgDomEl[0].clientHeight / 2 - modalDomEl[0].clientHeight / 2;
+                    }else if(options.position == 'top') {
+                        var top = 30;
+                    }else if(options.position == 'custom') {
+                        left = options.left;
+                        top = options.top;
+                    }
                     modalDomEl[0].style.width = options.width + 'px';
-                    body.append(modalDomEl);
+                    modalDomEl[0].style.top = top + 'px';
+                    modalDomEl[0].style.left = left + 'px';
+
 
                     if (options.removable) {
                         modalDomEl.addClass('can-remove');
@@ -252,11 +267,16 @@
                     }
                     var obj = {
                         closeAndDestroy: options.closeAndDestroy,
-                        modalScope: instanceObj.modalScope,
-                        controller: instanceObj.instance,
                         key: uid,
                         element: modalDomEl
                     };
+
+                    if(instanceObj) {
+                        obj.modalScope = instanceObj.modalScope;
+                        obj.controller = instanceObj.instance;
+                    }else {
+                        obj.modalScope = options.scope;
+                    }
                     stack.add(uid, obj);
                     obj.modalScope.close = close;
                     obj.modalScope.open = open;
@@ -349,7 +369,8 @@
                 function destroyAction(obj) {
                     obj.value.element.unbind();
                     obj.value.element.remove();
-                    obj.value.modalScope.$destroy();
+                    if(obj.controller)
+                        obj.value.modalScope.$destroy();
                     stack.remove(obj.key);
                 }
 
