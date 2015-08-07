@@ -11,14 +11,17 @@
     angular.module('testModal').controller('testController', ['$scope', 'angularModal', function ($scope, angularModal) {
         $scope.title= "标题";
         $scope.test = "hello modal";
+        var key = '';
+        angularModal.init({
+            controller: 'modalController',
+            position: 'top',
+            closeAndDestroy: false
+        }).then(function (data) {
+            key = data.key;
+        });
         $scope.showTop = function () {
-            angularModal.init({
-                controller: 'modalController',
-                position: 'top'
-            }).then(function (data) {
-                angularModal.open(data.key);
-            });
-        }
+            angularModal.open(key);
+        };
         $scope.showCenter = function () {
             angularModal.init({
                 scope: $scope,
@@ -26,7 +29,7 @@
             }).then(function (data) {
                 angularModal.open(data.key);
             });
-        }
+        };
         $scope.showCustom = function () {
             angularModal.init({
                 controller: 'modalController',

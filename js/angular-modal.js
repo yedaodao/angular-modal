@@ -54,7 +54,7 @@
                 openedLength: function () {
                     var length = 0;
                     for (var i = 0; i < stack.length; i++) {
-                        if (true == stack[i].value.modalScope.display) {
+                        if (stack[i].value.modalScope.hidden != true && stack[i].value.modalScope.display == true) {
                             length++;
                         }
                     }
@@ -65,11 +65,12 @@
     });
 
     module.provider('angularModal', function () {
-        this.$get = ['$window', '$document', '$templateCache', '$compile', '$q', '$http', '$rootScope', 'stack', '$controller',
-            function ($window, $document, $templateCache, $compile, $q, $http, $rootScope, stack, $controller) {
+        this.$get = ['$window', '$document', '$templateCache', '$compile', '$q', '$http', '$rootScope', 'stack', '$controller', '$timeout',
+            function ($window, $document, $templateCache, $compile, $q, $http, $rootScope, stack, $controller, $timeout) {
                 var body = $document.find('body'),
                     diffX = 0,
                     diffY = 0;
+
                 /**
                  * 生成uuid
                  * @returns {string}
@@ -124,7 +125,7 @@
                     bgDomEl = $compile(bgEl)($rootScope);
                 body.append(bgDomEl);
 
-                function clickHandler() {
+                function clickHandler(evt) {
                     $document.unbind('click', clickHandler);
                     var keys = stack.keys(),
                         i = 0;
@@ -150,12 +151,19 @@
                         }
                     }
                 }
+
+                function modalClickHandler(evt) {
+                    evt.stopImmediatePropagation();
+                }
+
                 /**
                  * 绑定dom点击事件
                  */
-                function bindDomClick() {
+                function bindDomClick(element) {
+                    element.bind('click', modalClickHandler);
                     $document.bind('click', clickHandler);
                 }
+
                 /**
                  * 初始化模态框层级为2000
                  */
@@ -229,13 +237,13 @@
                     };
                     angular.extend(options, opts);
                     //加载模板
-                    if(options.template == ''){
+                    if (options.template == '') {
                         loadTemplateUrl(options.templateUrl).then(function (result) {
                             var obj = initAction(result, options);
                             angular.extend(obj.modalScope, options.scope);
                             initDefered.resolve(obj);
                         });
-                    }else{
+                    } else {
                         var obj = initAction(options.template, options);
                         angular.extend(obj.modalScope, options.scope);
                         initDefered.resolve(obj);
@@ -245,22 +253,22 @@
 
                 function initAction(result, options) {
                     var uid = uuid(),
-                        modalEl = $('<div id="' + uid + '" class="angular-modal ' + options.theme + '" ng-class="{open:display}">' + result + '</div>');
-                    if(options.controller){
+                        modalEl = $('<div id="' + uid + '" class="angular-modal ' + options.theme + '" ng-class="{open:display, close:hidden}">' + result + '</div>');
+                    if (options.controller) {
                         var instanceObj = createCtrlInstance(options.controller),
                             modalDomEl = $compile(modalEl)(instanceObj.modalScope);
-                    }else{
+                    } else {
                         var modalDomEl = $compile(modalEl)(options.scope);
                     }
 
                     options.bindElement.append(modalDomEl);
 
                     var left = options.bindElement[0].clientWidth / 2 - options.width / 2;
-                    if(options.position == 'center') {
+                    if (options.position == 'center') {
                         var top = bgDomEl[0].clientHeight / 2 - modalDomEl[0].clientHeight / 2;
-                    }else if(options.position == 'top') {
+                    } else if (options.position == 'top') {
                         var top = 30;
-                    }else if(options.position == 'custom') {
+                    } else if (options.position == 'custom') {
                         left = options.left;
                         top = options.top;
                     }
@@ -281,10 +289,10 @@
                         element: modalDomEl
                     };
 
-                    if(instanceObj) {
+                    if (instanceObj) {
                         obj.modalScope = instanceObj.modalScope;
                         obj.controller = instanceObj.instance;
-                    }else {
+                    } else {
                         obj.modalScope = options.scope;
                     }
                     stack.add(uid, obj);
@@ -292,6 +300,12 @@
                     obj.modalScope.open = open;
                     obj.modalScope.destroy = destroy;
                     obj.modalScope.key = uid;
+                    obj.modalScope.modalElement = modalDomEl;
+
+                    $timeout(function () {
+                        obj.modalScope.$broadcast('modal.init.complete.event');
+                    }, 0);
+
                     return obj;
                 }
 
@@ -300,19 +314,20 @@
                  */
                 function open(key) {
                     setTimeout(function () {
-
                         var obj = stack.get(key),
                             scope = obj.value.modalScope;
-                        if(obj.value.overlay) {
+                        if (obj.value.overlay) {
                             bgDomEl.addClass('open');
                         }
-                        if(obj.value.clickBgClose) {
-                            bindDomClick();
+                        if (obj.value.clickBgClose) {
+                            bindDomClick(obj.value.element);
                         }
                         scope.$broadcast('modal.open.start.event');
                         scope.display = true;
+                        scope.hidden = false;
                         scope.$apply();
                         setTimeout(function () {
+                            scope.$apply();
                             scope.$broadcast('modal.open.end.event');
                         }, 300);
                     }, 10);
@@ -324,9 +339,9 @@
                  */
                 function close(key) {
                     var obj = stack.get(key);
-                    if (obj.value.closeAndDestroy) {
+                    if (obj && obj.value.closeAndDestroy) {
                         destroy(key);
-                    } else {
+                    } else if (obj) {
                         closeAction(obj);
                     }
                 }
@@ -354,12 +369,14 @@
 
                 function closeAction(obj) {
                     obj.value.modalScope.$broadcast('modal.close.start.event');
-                    obj.value.modalScope.display = false;
+                    obj.value.modalScope.hidden = true;
                     $document.unbind('click', clickHandler);
                     if (stack.openedLength() <= 0) {
                         bgDomEl.removeClass('open');
                     }
                     setTimeout(function () {
+                        obj.value.modalScope.display = false;
+                        obj.value.modalScope.$apply();
                         obj.value.modalScope.$broadcast('modal.close.end.event');
                     }, 300);
                 }
@@ -371,7 +388,7 @@
                 function destroy(key) {
                     var obj = stack.get(key),
                         scope = obj.value.modalScope;
-                    if (scope.display) {
+                    if (!scope.hidden) {
                         closeAction(obj);
                         setTimeout(function () {
                             scope.$broadcast('modal.destroy.event');
@@ -384,9 +401,9 @@
                 }
 
                 function destroyAction(obj) {
-                    obj.value.element.unbind();
+                    obj.value.element.unbind('click', modalClickHandler);
                     obj.value.element.remove();
-                    if(obj.controller)
+                    if (obj.controller)
                         obj.value.modalScope.$destroy();
                     stack.remove(obj.key);
                 }
