@@ -11,7 +11,7 @@
     angular.module('testModal', [])
         .controller('modalController', ['$scope', function ($scope) {
             $scope.hide = function () {
-                $scope.destroy($scope.key);
+                $scope.close($scope.key);
                 $scope.$broadcast('modal.event.hide');
             };
             $scope.title= "标题";
