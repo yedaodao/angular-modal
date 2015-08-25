@@ -56,50 +56,56 @@ modalController：
         };
         $scope.title= "标题";
         $scope.test = "hello modal";
-        $scope.$on('modal.open.end.event', function () {
-            console.log('modal open end');
-        });
-        $scope.$on('modal.open.start.event', function () {
-            console.log('modal open start');
-        });
-        $scope.$on('modal.close.end.event', function () {
-            console.log('modal close end');
-        });
-        $scope.$on('modal.close.start.event', function () {
-            console.log('modal close start');
-        });
-		$scope.$on('modal.closeAll.end.event', function () {
-            console.log('modal close end');
-        });
-        $scope.$on('modal.closeAll.start.event', function () {
-            console.log('modal close start');
-        });
-        $scope.$on('modal.destroy.event', function () {
-            console.log('modal destroy');
-        });
-		$scope.$on('modal.destroyAll.event', function () {
-            console.log('modal destroy');
-        });
 	}]);
 	
-- bindElement(可选): 模板插入到哪个元素。
-- position(可选): 位置（center,top,custom）。
-- left(可选): 位置为custom时可用。自定义模态框位置。
-- top(可选): 同上。
-- width(必须)：modal宽度。
-- scope(可选)：可以吧当前模块的数据注入到modal controller的$scope里边；如果controller为空，则使用scope所在的controller。
-- theme(可选)：modal动画主题。
-- templateUrl/template(必须)： 模板url。
-- controller(可选)：modal对应的angular controller，**如果此项为空则必须把某个controller的$scope赋值给scope。**
-- overlay(可选)：点击其他区域是否隐藏/销毁modal。
-- closeAndDestroy(可选)：隐藏modal的同时是否同时销毁modal，默认为true。
-- removable(可选)：modal是否是可拖动的，默认为false。
+1. bindElement(可选): 模板插入到哪个元素。
+1. position(可选): 位置（center,top,custom）。
+1. left(可选): 位置为custom时可用。自定义模态框位置。
+1. top(可选): 同上。
+1. width(必须)：modal宽度。
+1. scope(可选)：可以吧当前模块的数据注入到modal controller的$scope里边；如果controller为空，则使用scope所在的controller。
+1. theme(可选)：modal动画主题。
+1. templateUrl/template(必须)： 模板url。
+1. controller(可选)：modal对应的angular controller，**如果此项为空则必须把某个controller的$scope赋值给scope。**
+1. overlay(可选)：点击其他区域是否隐藏/销毁modal。
+1. closeAndDestroy(可选)：隐藏modal的同时是否同时销毁modal，默认为true。
+1. removable(可选)：modal是否是可拖动的，默认为false。
+
+##事件##
+
+	$scope.$on('modal.init.complete.event', function () {
+		//模态框初始化完成
+	}
+	$scope.$on('modal.open.end.event', function () {
+	    //模态框弹出动画结束
+	});
+	$scope.$on('modal.open.start.event', function () {
+	    //模态框弹出动画开始
+	});
+	$scope.$on('modal.close.end.event', function () {
+	    //模态框关闭动画结束
+	});
+	$scope.$on('modal.close.start.event', function () {
+	    //模态框关闭动画开始
+	});
+	$scope.$on('modal.closeAll.end.event', function () {
+	    //关闭所有模态框动画结束
+	});
+	$scope.$on('modal.closeAll.start.event', function () {
+	    //关闭所有模态框动画开始
+	});
+	$scope.$on('modal.destroy.event', function () {
+	    //模态框销毁
+	});
+	$scope.$on('modal.destroyAll.event', function () {
+	    //销毁所有模态框
+	});
 
 ## 接口 ##
 
 ### SERVICE： ###
 
-**init(opts):data**
+####init(opts):data####
 
 初始化modal。
 
@@ -113,36 +119,36 @@ opts请参照用法。
 		 element: JQLiteElement
 	}
 
-**open(key)**
+####open(key)####
 
 打开指定key的modal。
 
-**close(key)**
+####close(key)####
 
 隐藏指定key的modal。
 
-**closeAll()**
+####closeAll()####
 
 隐藏所有打开的Modal
 
-**destroy(key)**
+####destroy(key)####
 
 销毁指定key的modal
 
-**destroyAll()**
+####destroyAll()####
 
 销毁所有的modal
 
 ### SCOPE： ###
 
-**open(key)**
+####open(key)####
 
 打开指定key的modal。
 
-**close(key)**
+####close(key)####
 
 隐藏指定key的modal。
 
-**destroy(key)**
+####destroy(key)####
 
 销毁指定key的modal
