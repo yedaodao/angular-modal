@@ -1,5 +1,24 @@
 # Angular-Modal #
 
+It is a plugin based on angular for displaying a modal dialog. The modal dialog is customizable easily because it is use templates to render the view. You can design any styles which you want by templates. And we recommand that you should write logic codes about of the modal dialog in a separated file. Thus you can reuse the modal dialog with a series of complete business logic.
+
+## Install ##
+
+## Get started ##
+
+## Events ##
+
+## Lifecycle ##
+
+## Modify source ##
+
+If you want to modify the source, excute the following command in cmd under the folder of the source. Makesure that the Nodejs and Bower are installed.
+	
+	npm install
+	bower install
+
+## More questions ##
+
 ## 生命周期 ##
 
 init-open-close-destroy
