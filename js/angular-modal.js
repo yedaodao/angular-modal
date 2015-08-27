@@ -1,5 +1,5 @@
 (function (root, init) {
-    if (typeof define === 'function' && defined.amd) {
+    if (typeof define === 'function' && define.amd) {
         define(['angular'], init);
     } else if (root.angular) {
         init(root.angular);
