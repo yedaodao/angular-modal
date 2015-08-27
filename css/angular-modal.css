@@ -1,0 +1,197 @@
+.angular-modal h4 {
+    padding: 0;
+    margin: 0;
+    font-size: 18px;
+}
+
+.angular-modal {
+    box-shadow: 5px 5px 20px 0px #bec2ce;
+    font-family: Helvetica, "Microsoft YaHei", "微软雅黑", SimSun, "宋体", STXihei, "华文细黑", sans-serif;
+    visibility: hidden;
+    position: absolute;
+    z-index: 2000;
+    outline: 0;
+}
+
+.angular-modal.open {
+    visibility: visible;
+}
+
+.angular-modal-bg {
+    -webkit-animation-duration: 0.3s;
+    animation-duration: 0.3s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1500;
+    visibility: hidden;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+@-webkit-keyframes bgAnimate {
+    0% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+@keyframes bgAnimate {
+    0% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+.angular-modal-bg.open {
+    -webkit-animation-name: bgAnimate;
+    animation-name: bgAnimate;
+    visibility: visible;
+}
+
+.angular-modal .angular-modal-dialog {
+    width: 100%;
+}
+.angular-modal .angular-modal-content {
+    padding: 20px;
+    border: 1px solid #e3e3e3;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+.angular-modal.can-remove {
+    cursor:move;
+}
+
+.angular-modal .angular-modal-header {
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e3e3e3;
+}
+
+.angular-modal .angular-modal-body {
+    border-bottom: 1px solid #e3e3e3;
+    padding: 15px 0 15px 0;
+}
+
+.angular-modal .angular-modal-footer {
+    margin-top: 15px;
+    text-align: right;
+}
+
+.angular-modal .btn {
+     display: inline-block;
+     padding: 6px 12px;
+     margin-bottom: 0;
+     font-size: 14px;
+     font-weight: 400;
+     line-height: 1.42857143;
+     text-align: center;
+     white-space: nowrap;
+     vertical-align: middle;
+     cursor: pointer;
+     -webkit-user-select: none;
+     -moz-user-select: none;
+     -ms-user-select: none;
+     user-select: none;
+     background-image: none;
+     border: 1px solid transparent;
+     border-radius: 4px;
+     color: #333;
+     background-color: #fff;
+     border-color: #ccc;
+ }
+
+.angular-modal .btn:hover {
+    background-color: #eee;
+}
+
+.angular-modal .btn:active {
+    background-color: #e3e3e3;
+}
+
+/* 默认动画主题 */
+.default-theme {
+    -webkit-animation-duration: 0.3s;
+    animation-duration: 0.3s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+@-webkit-keyframes zoomIn {
+    0% {
+        opacity: 0;
+        -webkit-transform: scale3d(.7, .7, .7);
+        transform: scale3d(.7, .7, .7);
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+@keyframes zoomIn {
+    0% {
+        opacity: 0;
+        -webkit-transform: scale3d(.7, .7, .7);
+        -ms-transform: scale3d(.7, .7, .7);
+        transform: scale3d(.7, .7, .7);
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes zoomOut {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+        -webkit-transform: scale3d(.7, .7, .7);
+        transform: scale3d(.7, .7, .7);
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes zoomOut {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+        -webkit-transform: scale3d(.7, .7, .7);
+        -ms-transform: scale3d(.7, .7, .7);
+        transform: scale3d(.7, .7, .7);
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+.open.default-theme {
+    -webkit-animation-name: zoomIn;
+    animation-name: zoomIn;
+}
+
+.close.default-theme {
+    -webkit-animation-name: zoomOut;
+    animation-name: zoomOut;
+}
+/* 默认主题结束 */
